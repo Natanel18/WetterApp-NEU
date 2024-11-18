@@ -1,0 +1,74 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+   
+}
+
+
+.form-group  {
+    background-color: aqua;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+
+.app-main {
+    background-color: aqua;
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.input-box {
+    background-color: white;
+    width: 400px;
+    padding: 15px;
+    font-size: 18px;
+    margin-bottom: 50px;
+    border-radius: 5px;
+}
+
+.weather-body .location-details, .weather-body .weather-status {
+    margin-bottom: 50px;
+    border-radius: 5px;
+    height: 100px;
+   
+}
+
+body {
+background: url(./Dus.jpg);
+
+}
+
+.location-details {
+    background-color: gray;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
+}
+
+
+
+@media (max-width: 600px) {
+    .app-main {
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .input-box {
+        padding: 8px;
+    }
+}

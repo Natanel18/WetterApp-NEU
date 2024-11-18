@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wetter App</title>
+    <link rel="stylesheet" href="./Wetter Style.css">
+</head>
+<body>
+
+        <div class="app-main">
+
+    <div class="container">
+        <h1 class="text-center">Wetterabfrage</h1>
+        <div class="form-group">
+            <label for="city-input">Stadt eingeben</label><br><br>
+            <input type="text" class="form-control" id="city-input" placeholder="Stadt eingeben">
+        </div>
+        <button class="btn btn-primary btn-block" onclick="fetchWeather()">Wetter abrufen</button>
+        <div id="weather-output" class="alert alert-info mt-3" style="display: none;"></div>
+    </div>
+
+</div>
+    <script>
+        function fetchWeather() {
+            const city = document.getElementById('city-input').value;
+            const apiKey = 'bab281d79e5f1e9755a68d754cc313e7'; // API-Schlüssel hier einfügen
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=de`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Netzwerkantwort war nicht ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayWeather(data);
+                })
+                .catch(error => console.error('Fehler:', error));
+        }
+
+        function displayWeather(data) {
+            const weatherOutput = document.getElementById('weather-output');
+            if (data && data.weather && data.main) {
+                weatherOutput.innerHTML = `
+                    <h2>Wetter in ${data.name}</h2>
+                    <p>Temperatur: ${data.main.temp} °C</p>
+                    <p>Beschreibung: ${data.weather[0].description}</p>
+                    <p>Minimale Temperatur:${data.main.temp_min} °C</p>
+                    <p>Maximale Temperatur: ${data.main.temp_max} °C</p>
+                    <p>Windstärke: ${data.wind.speed} m/s </p>
+                    <p>Luftdruck: ${data.main.pressure} hPa </p>
+                    <p>Feuchtigkeit: ${data.main.humidity} % </p>
+                `;
+                weatherOutput.style.display = 'block'; // Ausgabe anzeigen
+
+                var weatherBackgrounds = {
+                    clear: "url('./Klares Wetter.jpeg')",
+                    clouds: "url('./Bewölkt.jpg')",
+                    rain: "url('./Regen.jpg')",
+                    drizzle: "url('./Nieselregen.jpg')",
+                    snow: "url('./Schnee.jpg')",
+                    thunderstorm: "url ('./Blitz und Donner.jpeg')",
+                    sun: "url('./Sonne.jpg')"
+                };
+
+                var weatherType = data.weather[0].main.toLowerCase();
+                var backgroundImage = weatherBackgrounds[weatherType] || "";
+
+                document.body.style.backgroundImage = backgroundImage;
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundPosition = "center";
+                document.body.style.backgroundRepeat = "no-repeat";
+                 } else {
+                weatherOutput.innerHTML = `<p>Stadt nicht gefunden.</p>`;
+                weatherOutput.style.display = 'block'; // Ausgabe anzeigen
+                document.body.style.backgroundImage = "url ('./bvb4.jpg')";
+            }
+        }
+
+
+</script>
+    <script src="main.js"></script>
+
+
+    
+</body>
+</html>
